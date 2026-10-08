@@ -1,7 +1,7 @@
 {
   "name": "@deployanyway/error-translator",
   "version": "0.1.0",
-  "description": "Translate developer errors into language humans can understand.",
+  "description": "Plain-English Node.js error explanations and debugging tips, because the stack trace has chosen violence.",
   "type": "module",
   "exports": "./src/index.js",
   "bin": {
@@ -37,5 +37,15 @@
   "devDependencies": {
     "eslint": "^10.12.0",
     "prettier": "^3.6.2"
-  }
+  },
+  "keywords": [
+    "nodejs",
+    "javascript",
+    "cli",
+    "developer-tools",
+    "debugging",
+    "error-messages",
+    "error-translator",
+    "plain-english"
+  ]
 }

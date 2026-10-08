@@ -1,6 +1,6 @@
 # error-translator
 
-Translate confusing developer errors into language humans can understand.
+Plain-English Node.js error explanations and debugging tips, because the stack trace has chosen violence.
 
 ```text
 Connection refused
