@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.0 — 2026-10-08
+
+- Rubber-duck translations: Keep the debugging guidance, add workplace-safe rubber-duck commentary. Plain output remains the default.
+- Add npm and CI badges to the published README.
+
 ## 0.1.1 — 2026-10-08
 
 - Correct npm installation and npx documentation after the initial publication.

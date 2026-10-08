@@ -16,7 +16,7 @@ try {
   });
   if (values.help) {
     console.log(
-      'Usage: error-translator <error code or quoted message> [--json] [--mode plain]\n\nTranslate errors into human-readable guidance.\n\nOptions:\n  -h, --help     Show help\n  -v, --version  Show version\n  --json         Print a structured JSON result\n  --mode plain   Translation mode (MVP: plain only)\n\nExamples:\n  error-translator ECONNREFUSED\n  error-translator "TypeError: value is not a function" --json\n\nExit codes: 0 translation/help/version; 2 invalid arguments.',
+      'Usage: error-translator <error code or quoted message> [--json] [--mode plain|rubber-duck]\n\nTranslate errors into human-readable guidance.\n\nOptions:\n  -h, --help     Show help\n  -v, --version  Show version\n  --json         Print a structured JSON result\n  --mode plain|rubber-duck   Keep useful guidance; add duck commentary\n\nExamples:\n  error-translator ECONNREFUSED\n  error-translator "TypeError: value is not a function" --json\n\nExit codes: 0 translation/help/version; 2 invalid arguments.',
     );
   } else if (values.version) {
     console.log(
