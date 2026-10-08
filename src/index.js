@@ -71,7 +71,7 @@ export function translateError(error, options = {}) {
     ...result,
     explanation:
       mode === "rubber-duck"
-        ? `${result.explanation} ${duckLines[matched] ?? "The duck recommends investigating before blaming the compiler."}`
+        ? `${result.explanation} ${Object.hasOwn(duckLines, matched ?? "") ? duckLines[matched] : "The duck recommends investigating before blaming the compiler."}`
         : result.explanation,
     likelyCauses: [...result.likelyCauses],
     suggestions: [...result.suggestions],

@@ -12,6 +12,8 @@ test("duck commentary preserves every actionable suggestion and plain default", 
     "ERR_MODULE_NOT_FOUND",
     "TypeError",
     "CUSTOM",
+    "__proto__",
+    "constructor",
   ]) {
     const plain = translateError(code);
     const duck = translateError(code, { mode: "rubber-duck" });
