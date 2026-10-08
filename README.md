@@ -73,7 +73,7 @@ An explicit code takes precedence, followed by a recognized name, then a
 case-sensitive whole-word match in the message. Unknown errors return general
 guidance with code `UNKNOWN`, or preserve an explicit unknown code.
 Invalid input throws TypeError; unsupported modes throw RangeError.
-Only `plain` is available in this MVP. Humorous modes are planned.
+Modes: `plain` (default) and `rubber-duck`, which preserves the guidance and adds commentary.
 
 ### `renderTranslation(result)`
 
@@ -98,12 +98,12 @@ and stack trace for context. No AI API or remote service is used.
 
 `error-translator <code or message> [options]`
 
-| Option            | Behavior              |
-| ----------------- | --------------------- |
-| `--help`, `-h`    | Show usage            |
-| `--version`, `-v` | Show package version  |
-| `--json`          | Print structured JSON |
-| `--mode plain`    | Select plain mode     |
+| Option            | Behavior                         |
+| ----------------- | -------------------------------- |
+| `--help`, `-h`    | Show usage                       |
+| `--version`, `-v` | Show package version             |
+| `--json`          | Print structured JSON            |
+| `--mode plain`    | Select plain or rubber-duck mode |
 
 Quote messages containing spaces or shell punctuation. Use `--` before a message
 beginning with a dash. No stdin support is included in the MVP.
@@ -144,3 +144,17 @@ are welcome.
 - [doggo-log](https://github.com/DeployAnyway/doggo-log)
 - [ship-it-meter](https://github.com/DeployAnyway/ship-it-meter)
 - [bro-say](https://github.com/DeployAnyway/bro-say)
+
+## Rubber-duck translations
+
+Keep the debugging guidance, add workplace-safe rubber-duck commentary. Plain output remains the default.
+
+```sh
+npx @deployanyway/error-translator ECONNREFUSED --mode rubber-duck
+```
+
+API (import the named functions from this package):
+
+```js
+translateError("ENOENT", { mode: "rubber-duck" });
+```

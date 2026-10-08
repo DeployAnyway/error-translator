@@ -1,10 +1,20 @@
 import { definitions } from "./definitions.js";
+const duckLines = {
+  ECONNREFUSED: "Your app knocked. The service has apparently gone for coffee.",
+  ENOENT: "The file is playing hide-and-seek. It is currently winning.",
+  EADDRINUSE: "Two servers reserved the same chair. Only one gets to sit.",
+  MODULE_NOT_FOUND:
+    "The dependency missed roll call. Check its invitation to node_modules.",
+  ERR_MODULE_NOT_FOUND:
+    "The module took a wrong turn. Extensions are street signs, not decorations.",
+  TypeError: "JavaScript received a surprise guest and forgot how to behave.",
+};
 
 /**
  * Translate a nonempty string, Error, or error-like object with a code/name/message.
  * Explicit codes take precedence over names and message matching.
  * @param {string | Error | {code?: string, name?: string, message?: string}} error
- * @param {{mode?: 'plain'}} [options]
+ * @param {{mode?: 'plain' | 'rubber-duck'}} [options]
  * @returns {{code: string, title: string, explanation: string, likelyCauses: string[], suggestions: string[], mode: string}}
  */
 export function translateError(error, options = {}) {
@@ -12,7 +22,8 @@ export function translateError(error, options = {}) {
     throw new TypeError("Options must be an object.");
   }
   const mode = options.mode ?? "plain";
-  if (mode !== "plain") throw new RangeError("Supported modes: plain.");
+  if (!["plain", "rubber-duck"].includes(mode))
+    throw new RangeError("Supported modes: plain, rubber-duck.");
   let code;
   let name;
   let message;
@@ -58,6 +69,10 @@ export function translateError(error, options = {}) {
   return {
     code: matched ?? "UNKNOWN",
     ...result,
+    explanation:
+      mode === "rubber-duck"
+        ? `${result.explanation} ${duckLines[matched] ?? "The duck recommends investigating before blaming the compiler."}`
+        : result.explanation,
     likelyCauses: [...result.likelyCauses],
     suggestions: [...result.suggestions],
     mode,
