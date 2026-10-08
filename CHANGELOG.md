@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1 — 2026-10-08
+
+- Correct npm installation and npx documentation after the initial publication.
+- Add a searchable, humorous package description and relevant npm keywords.
+- No API, CLI behavior, or dependency changes.
+
 ## 0.1.0 — 2026-10-08
 
 - Plain-English translations for ECONNREFUSED, ENOENT, EADDRINUSE, MODULE_NOT_FOUND, ERR_MODULE_NOT_FOUND, and TypeError.
