@@ -1,4 +1,12 @@
 import { definitions } from "./definitions.js";
+export const listErrors = () => Object.keys(definitions);
+
+/** Translate an ordered, bounded batch without mutating input. */
+export function translateErrors(errors, options = {}) {
+  if (!Array.isArray(errors) || errors.length < 1 || errors.length > 100)
+    throw new RangeError("Provide 1–100 errors.");
+  return Array.from(errors, (error) => translateError(error, options));
+}
 const duckLines = {
   ECONNREFUSED: "Your app knocked. The service has apparently gone for coffee.",
   ENOENT: "The file is playing hide-and-seek. It is currently winning.",

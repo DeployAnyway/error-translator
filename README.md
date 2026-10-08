@@ -1,5 +1,7 @@
 # error-translator
 
+> **0.3.0 release candidate:** this branch is not published. npm still serves 0.2.0. New options below require a source checkout or locally packed candidate.
+
 [![npm version](https://img.shields.io/npm/v/%40deployanyway%2Ferror-translator)](https://www.npmjs.com/package/@deployanyway/error-translator)
 [![CI](https://github.com/DeployAnyway/error-translator/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/DeployAnyway/error-translator/actions/workflows/ci.yml)
 
@@ -158,3 +160,34 @@ API (import the named functions from this package):
 ```js
 translateError("ENOENT", { mode: "rubber-duck" });
 ```
+
+## Ordered error batches and pipes
+
+```js
+import { translateErrors, listErrors } from "@deployanyway/error-translator";
+const results = translateErrors(["ENOENT", { code: "ECONNREFUSED" }], {
+  mode: "rubber-duck",
+});
+console.log(results[0].suggestions);
+console.log(listErrors());
+```
+
+Batches accept 1–100 errors in order, fail on malformed entries and return independent arrays. This is deterministic guidance, not diagnosis. Unknown errors remain unknown: keep the original stack.
+
+```sh
+echo "ECONNREFUSED" | node bin/cli.js --mode rubber-duck
+node bin/cli.js --batch --json < errors.json
+node bin/cli.js --list --json
+```
+
+Without arguments, read UTF-8 stdin (maximum 256 KiB). Arguments take precedence. --batch expects a JSON array; --json emits an array of results. --list catalogs supported codes. Status 0 means translated, including unknown errors; status 2 means invalid input.
+
+## Candidate quality standard
+
+The 0.3 candidate provides useful declaration types, ESM/CommonJS exports, installed-archive checks, and coverage gates (90% statements/lines/functions, 85% branches). CI covers Linux Node 22/24 and Windows/macOS Node 24. Node 22.13+ is required. No runtime dependencies, telemetry or network requests.
+
+From a candidate checkout: npm ci, npm run build, npm run coverage, npm run test:types, npm run verify:package. Pack verification installs a temporary local archive and checks module entries, types, executable and offline npm exec.
+
+[Contribution guide](CONTRIBUTING.md) · [Conduct](CODE_OF_CONDUCT.md) · [Security](SECURITY.md) · [Roadmap](ROADMAP.md) · [Migration](MIGRATION.md).
+
+**Tools for developers who probably know better.** Software nobody requested, built with questionable priorities, and shipped with absolute confidence!
