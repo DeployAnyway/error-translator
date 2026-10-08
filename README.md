@@ -182,6 +182,16 @@ node bin/cli.js --list --json
 
 Without arguments, read UTF-8 stdin (maximum 256 KiB). Arguments take precedence. --batch expects a JSON array; --json emits an array of results. --list catalogs supported codes. Status 0 means translated, including unknown errors; status 2 means invalid input.
 
+## Try the candidate from source
+
+```sh
+git clone --branch feature/quality-standard https://github.com/DeployAnyway/error-translator.git
+cd error-translator
+npm ci
+npm run build
+node bin/cli.js --help
+```
+
 ## Candidate quality standard
 
 The 0.3 candidate provides useful declaration types, ESM/CommonJS exports, installed-archive checks, and coverage gates (90% statements/lines/functions, 85% branches). CI covers Linux Node 22/24 and Windows/macOS Node 24. Node 22.13+ is required. No runtime dependencies, telemetry or network requests.
