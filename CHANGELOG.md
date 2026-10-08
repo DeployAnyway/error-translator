@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0 — 2026-10-08
+
+- Useful structured API/CLI additions described in README.
+- TypeScript declarations, CommonJS entry, coverage gates and installed archive checks.
+- Linux Node 22/24 plus Windows/macOS Node 24 CI.
+
 ## 0.2.0 — 2026-10-08
 
 - Rubber-duck translations: Keep the debugging guidance, add workplace-safe rubber-duck commentary. Plain output remains the default.
