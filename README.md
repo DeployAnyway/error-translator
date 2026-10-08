@@ -20,18 +20,18 @@ Try:
 
 ## Installation
 
-Version 0.1.0 is in development and has **not been published to npm**.
-Try from source with Node 22 or 24:
+Version 0.1.0 is available on npm. Requires Node 22 or later.
+You can also run from source with Node 22 or 24:
 
 ```sh
 git clone https://github.com/DeployAnyway/error-translator.git
 cd error-translator
-git checkout feature/initial-mvp
+git checkout main
 npm ci
 node bin/cli.js ECONNREFUSED
 ```
 
-After an approved npm release:
+Install from npm:
 
 ```sh
 npm install @deployanyway/error-translator
@@ -56,7 +56,7 @@ console.log(renderTranslation(result));
 node bin/cli.js "TypeError: value is not a function" --json
 ```
 
-After publication: `npx @deployanyway/error-translator ECONNREFUSED`.
+Run with npx: `npx @deployanyway/error-translator ECONNREFUSED`.
 
 ## API and options
 
