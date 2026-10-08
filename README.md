@@ -1,5 +1,8 @@
 # error-translator
 
+[![npm version](https://img.shields.io/npm/v/%40deployanyway%2Ferror-translator)](https://www.npmjs.com/package/@deployanyway/error-translator)
+[![CI](https://github.com/DeployAnyway/error-translator/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/DeployAnyway/error-translator/actions/workflows/ci.yml)
+
 Plain-English Node.js error explanations and debugging tips, because the stack trace has chosen violence.
 
 ```text
