@@ -4,3 +4,5 @@ api.translateErrors(["ENOENT", new Error("TypeError")], {
 });
 // @ts-expect-error invalid literal
 api.translateError("x", { mode: "pirate" });
+import { errorCatalog } from "@deployanyway/error-translator";
+errorCatalog({ mode: "rubber-duck" })[0].suggestions;

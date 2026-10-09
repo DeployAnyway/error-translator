@@ -1,6 +1,6 @@
 {
   "name": "@deployanyway/error-translator",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Plain-English Node.js error explanations and debugging tips, because the stack trace has chosen violence.",
   "type": "module",
   "exports": {

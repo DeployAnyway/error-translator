@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.0
+
+46 built-in definitions cover filesystem, permissions, networking, module loading, streams, HTTP response lifecycle and JavaScript errors. Each has a specific explanation, likely causes and practical checks. Rubber-duck commentary has a distinct original line for every supported definition. No commands run automatically and unknown errors remain explicitly unrecognized.
+
+```sh
+
+
 ## 0.3.0 — 2026-10-08
 
 - Useful structured API/CLI additions described in README.
@@ -22,3 +29,4 @@
 - Plain-English translations for ECONNREFUSED, ENOENT, EADDRINUSE, MODULE_NOT_FOUND, ERR_MODULE_NOT_FOUND, and TypeError.
 - Structured results, text rendering, and CLI with JSON output.
 - Automated tests, linting, formatting, and Node 22/24 CI.
+```

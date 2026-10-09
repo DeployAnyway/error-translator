@@ -21,3 +21,5 @@ export function translateErrors(
 ): Translation[];
 export function renderTranslation(result: Translation): string;
 export function listErrors(): string[];
+
+export function errorCatalog(options?: TranslationOptions): Translation[];
