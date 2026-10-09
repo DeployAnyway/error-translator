@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.0
+
+- Explain This Failure: real errors and cause chains.
+- Typed API, CLI integration, runnable codebase example and meaningful workflow tests.
+- Stable contracts and migration guidance; original humor stays around accurate facts.
+
 ## 0.4.0
 
 46 built-in definitions cover filesystem, permissions, networking, module loading, streams, HTTP response lifecycle and JavaScript errors. Each has a specific explanation, likely causes and practical checks. Rubber-duck commentary has a distinct original line for every supported definition. No commands run automatically and unknown errors remain explicitly unrecognized.

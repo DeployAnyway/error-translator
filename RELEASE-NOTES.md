@@ -1,9 +1,11 @@
-# 0.4.0 — 2026-10-08
+# 1.0.0 — Explain This Failure: real errors and cause chains
 
-46 distinct error definitions with explanations, causes and practical checks; original duck commentary for each; structured errorCatalog API and --catalog CLI.
+Explain real Node.js errors and cause chains with practical debugging checks. The stack trace has chosen violence; the duck brought context.
 
-Requires Node 22.13+ or 24. See README for copyable CLI and API examples. All required source, type, coverage and installed archive checks passed locally; CI must pass on the final PR head before merging. Original content, MIT code, no backend calls from the libraries.
+diagnoseError/renderDiagnosis and diagnostic CLI flags are additive. Explicit code precedence and existing catalog/batch behavior remain. Use diagnosis.original to hand the same error to your existing handler; serializing a diagnosis omits that reference.
 
-## Compatibility
+Install: `npm install @deployanyway/error-translator@1.0.0`
 
-Existing APIs remain available; new modes are explicit. Expanded error matching may recognize codes that were previously unknown.
+See README for runnable API/CLI examples, supported formats, defaults and limitations. Existing catalogs remain. Core APIs require no online services. Root demo: https://deployanyway.github.io/.
+
+Validation is recorded in the v1 release report after final CI and installed-package verification.

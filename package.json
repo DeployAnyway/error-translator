@@ -1,7 +1,7 @@
 {
   "name": "@deployanyway/error-translator",
-  "version": "0.4.0",
-  "description": "Plain-English Node.js error explanations and debugging tips, because the stack trace has chosen violence.",
+  "version": "1.0.0",
+  "description": "Explain real Node.js errors and cause chains with practical debugging checks. The stack trace has chosen violence; the duck brought context.",
   "type": "module",
   "exports": {
     ".": {
@@ -27,7 +27,8 @@
     "dist",
     "index.d.ts",
     "index.d.cts",
-    "MIGRATION.md"
+    "MIGRATION.md",
+    "examples"
   ],
   "engines": {
     "node": ">=22.13"
@@ -74,7 +75,9 @@
     "plain-english",
     "typescript",
     "humor",
-    "deployanyway"
+    "deployanyway",
+    "error-cause",
+    "error-handling"
   ],
   "main": "./dist/index.cjs",
   "types": "./index.d.ts",

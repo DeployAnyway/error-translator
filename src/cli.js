@@ -7,6 +7,8 @@ import {
   translateErrors,
   listErrors,
   errorCatalog,
+  diagnoseError,
+  renderDiagnosis,
 } from "./index.js";
 
 import { readStdin } from "./input.js";
@@ -21,12 +23,15 @@ try {
       batch: { type: "boolean" },
       list: { type: "boolean" },
       catalog: { type: "boolean" },
+      diagnose: { type: "boolean" },
+      "include-stack": { type: "boolean" },
+      "max-depth": { type: "string" },
       mode: { type: "string", default: "plain" },
     },
   });
   if (values.help) {
     console.log(
-      'Usage: error-translator <error code or quoted message> [--json] [--mode plain|rubber-duck]\n\nTranslate errors into human-readable guidance. Without arguments, read stdin (256 KiB). --batch reads a JSON array of 1–100 errors. --list lists supported codes. --catalog prints all explanations and checks.\n\nOptions:\n  -h, --help     Show help\n  -v, --version  Show version\n  --json         Print a structured JSON result\n  --mode plain|rubber-duck   Keep useful guidance; add duck commentary\n\nExamples:\n  error-translator ECONNREFUSED\n  error-translator "TypeError: value is not a function" --json\n\nExit codes: 0 translation/help/version; 2 invalid arguments.',
+      'Usage: error-translator <error code or quoted message> [--json] [--mode plain|rubber-duck]\n\nTranslate errors into human-readable guidance. --diagnose reads a JSON error/cause record; --max-depth 1..32 bounds it; --include-stack opts into original stacks. Without arguments, read stdin (256 KiB). --batch reads a JSON array of 1–100 errors. --list lists supported codes. --catalog prints all explanations and checks.\n\nOptions:\n  -h, --help     Show help\n  -v, --version  Show version\n  --json         Print a structured JSON result\n  --mode plain|rubber-duck   Keep useful guidance; add duck commentary\n\nExamples:\n  error-translator ECONNREFUSED\n  error-translator "TypeError: value is not a function" --json\n\nExit codes: 0 translation/help/version; 2 invalid arguments.',
     );
   } else if (values.version) {
     console.log(
@@ -34,6 +39,24 @@ try {
         readFileSync(new URL("../package.json", import.meta.url), "utf8"),
       ).version,
     );
+  } else if (values.diagnose) {
+    if (values.batch || values.catalog || values.list)
+      throw new TypeError(
+        "--diagnose cannot combine with --batch, --catalog or --list.",
+      );
+    const text = positionals.length ? positionals.join(" ") : await readStdin();
+    const result = diagnoseError(JSON.parse(text), {
+      mode: values.mode,
+      includeStack: values["include-stack"] ?? false,
+      ...(values["max-depth"] !== undefined
+        ? { maxDepth: Number(values["max-depth"]) }
+        : {}),
+    });
+    console.log(
+      values.json ? JSON.stringify(result, null, 2) : renderDiagnosis(result),
+    );
+  } else if (values["include-stack"] || values["max-depth"] !== undefined) {
+    throw new TypeError("--include-stack and --max-depth require --diagnose.");
   } else if (values.catalog) {
     if (positionals.length || values.batch || values.list)
       throw new TypeError(

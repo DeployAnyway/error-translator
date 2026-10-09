@@ -92,7 +92,7 @@ test("CLI text, JSON, help, version, unknown errors", () => {
   );
   assert.equal(cli("--help").status, 0);
   assert.ok(cli("--help").stdout.includes("Usage:"));
-  assert.equal(cli("--version").stdout.trim(), "0.4.0");
+  assert.equal(cli("--version").stdout.trim(), "1.0.0");
   assert.equal(cli("custom error").status, 0);
 });
 test("CLI invalid arguments exit 2 with stderr", () => {
