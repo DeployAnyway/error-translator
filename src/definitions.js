@@ -1,5 +1,7 @@
+import { extraDefinitions } from "./extra-definitions.js";
 // Keep technical guidance here so contributors can add errors without changing logic.
 export const definitions = {
+  ...extraDefinitions,
   ECONNREFUSED: {
     title: "Connection refused",
     explanation:

@@ -1,6 +1,24 @@
 # error-translator
 
-> **Version 0.3.0:** install from npm with Node 22.13+ or Node 24. See MIGRATION.md for changes from 0.2.0.
+## Browse the debugging library (0.4.0)
+
+46 built-in definitions cover filesystem, permissions, networking, module loading, streams, HTTP response lifecycle and JavaScript errors. Each has a specific explanation, likely causes and practical checks. Rubber-duck commentary has a distinct original line for every supported definition. No commands run automatically and unknown errors remain explicitly unrecognized.
+
+```sh
+npx @deployanyway/error-translator ERR_HTTP_HEADERS_SENT --mode rubber-duck
+npx @deployanyway/error-translator --catalog --json
+npx @deployanyway/error-translator --list
+```
+
+```js
+import { errorCatalog, translateError } from "@deployanyway/error-translator";
+console.log(errorCatalog({ mode: "plain" }));
+console.log(translateError({ code: "EACCES", message: "open config.json" }));
+```
+
+`errorCatalog(options?)` returns independent structured translations for the complete catalog. `--catalog` prints all guidance, or JSON with `--json`. Explicit codes still take precedence over message matching. This is a focused Node/JavaScript debugging catalog, not diagnosis of every platform or framework error. Technical reference: https://nodejs.org/api/errors.html.
+
+> **Version 0.4.0:** install from npm with Node 22.13+ or Node 24. See MIGRATION.md for changes from 0.2.0.
 
 [![npm version](https://img.shields.io/npm/v/%40deployanyway%2Ferror-translator)](https://www.npmjs.com/package/@deployanyway/error-translator)
 [![CI](https://github.com/DeployAnyway/error-translator/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/DeployAnyway/error-translator/actions/workflows/ci.yml)
@@ -84,14 +102,54 @@ Invalid result shapes throw TypeError.
 
 ### Built-in errors
 
-| Code/name            | Guidance                                   |
-| -------------------- | ------------------------------------------ |
-| ECONNREFUSED         | Service availability, host, port, firewall |
-| ENOENT               | Missing paths and working directories      |
-| EADDRINUSE           | Port conflicts and duplicate instances     |
-| MODULE_NOT_FOUND     | CommonJS dependencies and paths            |
-| ERR_MODULE_NOT_FOUND | ES module dependencies, paths, extensions  |
-| TypeError            | Unexpected types and null/undefined values |
+| Code/name                      | Guidance                          |
+| ------------------------------ | --------------------------------- |
+| EACCES                         | Permission denied                 |
+| EPERM                          | Operation not permitted           |
+| EEXIST                         | Target already exists             |
+| ENOTDIR                        | Expected a directory              |
+| EISDIR                         | Expected a file                   |
+| ENOTEMPTY                      | Directory is not empty            |
+| EMFILE                         | Too many open files               |
+| ENFILE                         | System file table exhausted       |
+| ENOSPC                         | No space left                     |
+| EROFS                          | Read-only filesystem              |
+| EBUSY                          | Resource busy                     |
+| EXDEV                          | Cross-device operation            |
+| EPIPE                          | Broken pipe                       |
+| ECONNRESET                     | Connection reset                  |
+| ETIMEDOUT                      | Operation timed out               |
+| ENOTFOUND                      | Name lookup failed                |
+| EAI_AGAIN                      | Temporary name lookup failure     |
+| EADDRNOTAVAIL                  | Local address unavailable         |
+| ECONNABORTED                   | Connection aborted                |
+| ENETUNREACH                    | Network unreachable               |
+| EHOSTUNREACH                   | Host unreachable                  |
+| EINVAL                         | Invalid argument                  |
+| ABORT_ERR                      | Operation aborted                 |
+| ERR_INVALID_ARG_TYPE           | Wrong argument type               |
+| ERR_INVALID_ARG_VALUE          | Invalid argument value            |
+| ERR_OUT_OF_RANGE               | Value outside allowed range       |
+| ERR_HTTP_HEADERS_SENT          | Headers already sent              |
+| ERR_HTTP_INVALID_STATUS_CODE   | Invalid HTTP status               |
+| ERR_INVALID_URL                | Invalid URL                       |
+| ERR_PACKAGE_PATH_NOT_EXPORTED  | Package path not exported         |
+| ERR_PACKAGE_IMPORT_NOT_DEFINED | Package import not defined        |
+| ERR_INVALID_PACKAGE_CONFIG     | Invalid package configuration     |
+| ERR_UNKNOWN_FILE_EXTENSION     | Unknown module file extension     |
+| ERR_IMPORT_ATTRIBUTE_MISSING   | Required import attribute missing |
+| ERR_STREAM_WRITE_AFTER_END     | Write after stream end            |
+| ERR_STREAM_DESTROYED           | Stream destroyed                  |
+| ERR_SOCKET_BAD_PORT            | Invalid socket port               |
+| SyntaxError                    | Invalid JavaScript syntax         |
+| ReferenceError                 | Name is not available             |
+| RangeError                     | Value exceeds a permitted range   |
+| ECONNREFUSED                   | Connection refused                |
+| ENOENT                         | File or directory not found       |
+| EADDRINUSE                     | Address already in use            |
+| MODULE_NOT_FOUND               | Module not found                  |
+| ERR_MODULE_NOT_FOUND           | ES module not found               |
+| TypeError                      | Unexpected value type             |
 
 Translations describe likely causes, not a diagnosis. Keep the original error
 and stack trace for context. No AI API or remote service is used.

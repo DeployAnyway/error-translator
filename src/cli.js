@@ -6,6 +6,7 @@ import {
   renderTranslation,
   translateErrors,
   listErrors,
+  errorCatalog,
 } from "./index.js";
 
 import { readStdin } from "./input.js";
@@ -19,18 +20,32 @@ try {
       json: { type: "boolean" },
       batch: { type: "boolean" },
       list: { type: "boolean" },
+      catalog: { type: "boolean" },
       mode: { type: "string", default: "plain" },
     },
   });
   if (values.help) {
     console.log(
-      'Usage: error-translator <error code or quoted message> [--json] [--mode plain|rubber-duck]\n\nTranslate errors into human-readable guidance. Without arguments, read stdin (256 KiB). --batch reads a JSON array of 1–100 errors. --list lists supported codes.\n\nOptions:\n  -h, --help     Show help\n  -v, --version  Show version\n  --json         Print a structured JSON result\n  --mode plain|rubber-duck   Keep useful guidance; add duck commentary\n\nExamples:\n  error-translator ECONNREFUSED\n  error-translator "TypeError: value is not a function" --json\n\nExit codes: 0 translation/help/version; 2 invalid arguments.',
+      'Usage: error-translator <error code or quoted message> [--json] [--mode plain|rubber-duck]\n\nTranslate errors into human-readable guidance. Without arguments, read stdin (256 KiB). --batch reads a JSON array of 1–100 errors. --list lists supported codes. --catalog prints all explanations and checks.\n\nOptions:\n  -h, --help     Show help\n  -v, --version  Show version\n  --json         Print a structured JSON result\n  --mode plain|rubber-duck   Keep useful guidance; add duck commentary\n\nExamples:\n  error-translator ECONNREFUSED\n  error-translator "TypeError: value is not a function" --json\n\nExit codes: 0 translation/help/version; 2 invalid arguments.',
     );
   } else if (values.version) {
     console.log(
       JSON.parse(
         readFileSync(new URL("../package.json", import.meta.url), "utf8"),
       ).version,
+    );
+  } else if (values.catalog) {
+    if (positionals.length || values.batch || values.list)
+      throw new TypeError(
+        "--catalog does not accept input, --batch or --list.",
+      );
+    const catalog = errorCatalog({ mode: values.mode });
+    console.log(
+      values.json
+        ? JSON.stringify(catalog, null, 2)
+        : catalog
+            .map((item) => item.code + " — " + renderTranslation(item))
+            .join("\n\n---\n\n"),
     );
   } else if (values.list) {
     if (positionals.length || values.batch)
