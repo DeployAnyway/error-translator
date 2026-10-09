@@ -1,4 +1,5 @@
 import { definitions } from "./definitions.js";
+export { diagnoseError, renderDiagnosis } from "./diagnostics.js";
 export const listErrors = () => Object.keys(definitions);
 
 /** Translate an ordered, bounded batch without mutating input. */

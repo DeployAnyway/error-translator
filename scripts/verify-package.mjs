@@ -108,6 +108,28 @@ try {
     ],
     temp,
   );
+  assert.ok(
+    pack.files.some((f) => f.path === "examples/explain-failure.mjs"),
+    "Runnable example must ship",
+  );
+  assert.equal(
+    run(
+      [
+        "--input-type=module",
+        "-e",
+        "import * as api from '@deployanyway/error-translator';const error=new Error('Wrapped',{cause:Object.assign(new Error('Missing file'),{code:'ENOENT'})}); const r=api.diagnoseError(error); if(r.original!==error||r.chain[1].code!=='ENOENT')throw new Error('Cause lost'); console.log(JSON.stringify(r));",
+      ],
+      temp,
+    ),
+    run(
+      [
+        "--input-type=commonjs",
+        "-e",
+        "const api=require('@deployanyway/error-translator');const error=new Error('Wrapped',{cause:Object.assign(new Error('Missing file'),{code:'ENOENT'})}); const r=api.diagnoseError(error); if(r.original!==error||r.chain[1].code!=='ENOENT')throw new Error('Cause lost'); console.log(JSON.stringify(r));",
+      ],
+      temp,
+    ),
+  );
   console.log(
     JSON.stringify(
       {

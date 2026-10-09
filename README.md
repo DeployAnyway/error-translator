@@ -1,5 +1,35 @@
 # error-translator
 
+## Explain This Failure: real errors and cause chains (1.0.0)
+
+diagnoseError(error, options) walks actual Error.cause chains with a default eight-layer bound (maxDepth 1–32). It detects cycles, exposes unknown causes honestly and returns structured chain entries with a translation for each layer. It never throws away the original error: result.original is the exact input reference and is deliberately non-enumerable so JSON output excludes it. The caller controls rethrowing, logging and exit behavior.
+
+```js
+import { diagnoseError, renderDiagnosis } from "@deployanyway/error-translator";
+try {
+  await loadConfig();
+} catch (error) {
+  const diagnosis = diagnoseError(error, { mode: "rubber-duck" });
+  console.error(renderDiagnosis(diagnosis));
+  throw error; // preserve failure behavior and the original stack
+}
+```
+
+Options: mode plain/rubber-duck, maxDepth, includeStack (default false). Entries contain depth, name, message, optional code, translation and opt-in stack. stopped is complete/cycle/depth-limit; truncated reports incomplete traversal. Arbitrary primitive causes receive an explicit unknown translation. The caller's errors and causes are not mutated. AggregateError.errors is not flattened; this API follows the cause chain.
+
+```sh
+printf '%s' '{"message":"Config failed","cause":{"code":"ENOENT","message":"open config.json"}}' | error-translator --diagnose --json
+node node_modules/@deployanyway/error-translator/examples/explain-failure.mjs ./missing-config.json
+```
+
+--diagnose accepts a JSON error record from stdin or a quoted argument, with --max-depth and opt-in --include-stack. It rejects batch/catalog/list combinations. Translation/diagnosis exits 0; invalid input exits 2. The runnable filesystem example preserves application failure with exit 1. Messages and opt-in stacks can contain private data; this library does not redact them or run fixes.
+
+## Stable v1 contract
+
+Node 22.13+ or Node 24. MIT licensed. CLI flags, structured fields, ESM/CommonJS exports and declarations are covered by tests and installed-package checks. Existing 0.4 APIs remain available except the explicitly documented doggo-log redaction/text-context changes. Future incompatible public API changes require a major release; callers should consume structured fields rather than parse jokes. Exact humorous wording and seeded catalog choices are version-specific. No telemetry, external API keys or network service is needed for core use.
+
+Run npm test, npm run lint, npm run format:check, npm run coverage, npm run test:types and npm run verify:package from a source checkout. Runnable examples are shipped under examples/. The root demo is https://deployanyway.github.io/.
+
 ## Browse the debugging library (0.4.0)
 
 46 built-in definitions cover filesystem, permissions, networking, module loading, streams, HTTP response lifecycle and JavaScript errors. Each has a specific explanation, likely causes and practical checks. Rubber-duck commentary has a distinct original line for every supported definition. No commands run automatically and unknown errors remain explicitly unrecognized.

@@ -6,3 +6,10 @@ api.translateErrors(["ENOENT", new Error("TypeError")], {
 api.translateError("x", { mode: "pirate" });
 import { errorCatalog } from "@deployanyway/error-translator";
 errorCatalog({ mode: "rubber-duck" })[0].suggestions;
+import { diagnoseError, renderDiagnosis } from "@deployanyway/error-translator";
+const diagnosed = diagnoseError(
+  new Error("outer", { cause: new Error("inner") }),
+  { includeStack: false, maxDepth: 4 },
+);
+renderDiagnosis(diagnosed);
+diagnoseError({ message: "failure", cause: { code: "ENOENT" } });

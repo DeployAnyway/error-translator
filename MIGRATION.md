@@ -9,3 +9,9 @@ Install 0.3.0 with npm. Seeds and exact humorous wording are version-specific. D
 46 distinct error definitions with explanations, causes and practical checks; original duck commentary for each; structured errorCatalog API and --catalog CLI.
 
 Default behavior is retained except that the expanded error catalog now recognizes additional errors. New rotation and release-plan features are opt-in.
+
+## 0.4.0 to stable 1.0.0
+
+diagnoseError/renderDiagnosis and diagnostic CLI flags are additive. Explicit code precedence and existing catalog/batch behavior remain. Use diagnosis.original to hand the same error to your existing handler; serializing a diagnosis omits that reference.
+
+See README for exact contracts, bounds and failure behavior.
